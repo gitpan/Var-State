@@ -4,7 +4,7 @@
 
 use strict;
 use Test::More;
-use PerlFiveEight::State;
+use Var::State;
 
 __END__
 

@@ -45,4 +45,4 @@ sub module_boilerplate_ok {
     );
 }
 
-module_boilerplate_ok('lib/PerlFiveEight/State.pm');
+module_boilerplate_ok('lib/Var/State.pm');

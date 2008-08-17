@@ -9,7 +9,7 @@ use Devel::Caller   qw/caller_vars/;
 use Devel::LexAlias qw/lexalias/;
 use PadWalker       qw/var_name/;
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 my %__state_cache;
 
 sub state { #=================================================================
@@ -49,7 +49,7 @@ Var::State - state [variable]; in perl 5.8 - sort-of...
 
 =head1 VERSION
 
-0.02
+0.03
 
 =head1 SYNOPSIS
 
@@ -79,7 +79,7 @@ Will import C<state()> into the current namespace.
 
 Need to add state as a keyword, so you don't have to declare the variable
 with my() first!
-This exact problem breakes compatibility with 5.10's state, and therefor
+This exact problem breakes compatibility with 5.10's state, and therefore
 t/11-state-5.10.t is not included in the test-suite - yet.
 
 Please report any bugs or feature requests to

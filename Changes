@@ -1,10 +1,14 @@
 Revision history for Var-State
 
+0.03    Sun, 18 Aug 2008 22:50:00 +0200
+        Completely removed PerlFiveEight::
+
 0.02    Sun, 17 Aug 2008 21:53:00 +0200
         Added tests for hash and array as well 
         Added line-number and file-name to $key 
         Added BUGS AND LIMITATIONS 
         Fixed bug with only-one-arg-test (will not work with array and hash) 
+        Renamed from PerlFiveEight:: to Var::
 
 0.01    Thu, 14 Aug 2008 16:07:00 +0200
         First release of Var::State

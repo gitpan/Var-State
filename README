@@ -2,7 +2,7 @@ NAME
     Var::State - state [variable]; in perl 5.8 - sort-of...
 
 VERSION
-    0.02
+    0.03
 
 SYNOPSIS
      use Var::State;
@@ -27,7 +27,7 @@ FUNCTIONS
 BUGS AND LIMITATIONS
     Need to add state as a keyword, so you don't have to declare the
     variable with my() first! This exact problem breakes compatibility with
-    5.10's state, and therefor t/11-state-5.10.t is not included in the
+    5.10's state, and therefore t/11-state-5.10.t is not included in the
     test-suite - yet.
 
     Please report any bugs or feature requests to "bug-var-state at
