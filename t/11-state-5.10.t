@@ -6,11 +6,9 @@ use strict;
 use Test::More;
 use Var::State;
 
+plan skip_all => 'state keyword is missing!';
+
 __END__
-
-Will not compile without Devel::Declare..?
-
-plan tests => 130;
 
 ok( ! defined state $uninit, q(state vars are undef by default) );
 

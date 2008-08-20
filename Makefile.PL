@@ -1,18 +1,11 @@
-use strict;
-use warnings;
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
-WriteMakefile(
-    NAME          => 'Var::State',
-    AUTHOR        => 'Jan Henning Thorsen <pm@flodhest.net>',
-    VERSION_FROM  => 'lib/Var/State.pm',
-    ABSTRACT_FROM => 'lib/Var/State.pm',
-    PL_FILES      => {},
-    PREREQ_PM     => {
-                         'PadWalker'       => '0',
-                         'Devel::Caller'   => '0',
-                         'Devel::LexAlias' => '0',
-                     },
-    dist          => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean         => { FILES => 'Var-State-*' },
-);
+name     q(Var-State);
+all_from q(lib/Var/State.pm);
+
+requires      q(PadWalker)       => 0;
+requires      q(Devel::Caller)   => 0;
+requires      q(Devel::LexAlias) => 0;
+test_requires q(Test::More)      => 0;
+
+WriteAll;

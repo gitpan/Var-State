@@ -9,11 +9,10 @@ use Devel::Caller   qw/caller_vars/;
 use Devel::LexAlias qw/lexalias/;
 use PadWalker       qw/var_name/;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 my %__state_cache;
 
-sub state { #=================================================================
-
+sub my_state { #=============================================================
     my $var  = (caller_vars(0))[0];
     my $name = var_name(1, $var);
     my $key  = join(";", (caller(0))[1,2], # caller file and linenumber
@@ -36,7 +35,7 @@ sub state { #=================================================================
 sub import { #================================================================
     my $parent = caller(1);
     no strict 'refs';
-    *{"${parent}::state"} = \&state;
+    *{"${parent}::my_state"} = \&my_state;
     return;
 }
 
@@ -49,7 +48,7 @@ Var::State - state [variable]; in perl 5.8 - sort-of...
 
 =head1 VERSION
 
-0.03
+0.04
 
 =head1 SYNOPSIS
 
@@ -57,7 +56,7 @@ Var::State - state [variable]; in perl 5.8 - sort-of...
 
  sub foo {
      my $i = 0;
-     state $i;
+     my_state $i;
      return $i++;
  }
 
@@ -65,15 +64,19 @@ Var::State - state [variable]; in perl 5.8 - sort-of...
 
 =head1 FUNCTIONS
 
+=head2 my_state(var)
+
+Will make "var" (@var, $var, %var) static.
+
 =head2 state(var)
 
 IMPORTANT: READ BUGS AND LIMITATIONS!
 
-Will make "var" (@var, $var, %var) static.
+Not yet implemented.
 
 =head2 import
 
-Will import C<state()> into the current namespace.
+Will import C<my_state()> into the current namespace.
 
 =head1 BUGS AND LIMITATIONS
 

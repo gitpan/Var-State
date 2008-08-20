@@ -2,27 +2,30 @@ NAME
     Var::State - state [variable]; in perl 5.8 - sort-of...
 
 VERSION
-    0.03
+    0.04
 
 SYNOPSIS
      use Var::State;
 
      sub foo {
          my $i = 0;
-         state $i;
+         my_state $i;
          return $i++;
      }
 
      print foo() for(0..10); # should print 0 to 10
 
 FUNCTIONS
+  my_state(var)
+    Will make "var" (@var, $var, %var) static.
+
   state(var)
     IMPORTANT: READ BUGS AND LIMITATIONS!
 
-    Will make "var" (@var, $var, %var) static.
+    Not yet implemented.
 
   import
-    Will import "state()" into the current namespace.
+    Will import "my_state()" into the current namespace.
 
 BUGS AND LIMITATIONS
     Need to add state as a keyword, so you don't have to declare the

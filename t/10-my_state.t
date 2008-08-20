@@ -15,19 +15,19 @@ for my $type (qw/scalar array hash/) {
 
 sub state_scalar {
     my $x = 0;
-    state $x;
+    my_state $x;
     return $x++;
 }
 
 sub state_array {
     my @array = (0);
-    state @array;
+    my_state @array;
     return $array[0]++;
 }
 
 sub state_hash {
     my %hash = (x => 0);
-    state %hash;
+    my_state %hash;
     return $hash{x}++;
 }
 

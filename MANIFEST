@@ -1,12 +1,19 @@
 Changes
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
+lib/Var/State.pm
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 META.yml
 README
-lib/Var/State.pm
 t/00-load.t
-t/10-makestate.t
+t/01-pod-coverage.t
+t/01-pod.t
+t/10-my_state.t
 t/11-state-5.10.t
-t/boilerplate.t
-t/pod-coverage.t
-t/pod.t
