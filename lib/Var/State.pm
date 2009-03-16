@@ -1,50 +1,8 @@
-
-#==================
 package Var::State;
-#==================
-
-use strict;
-use warnings;
-use Devel::Caller   qw/caller_vars/;
-use Devel::LexAlias qw/lexalias/;
-use PadWalker       qw/var_name/;
-
-our $VERSION = 0.04;
-my %__state_cache;
-
-sub my_state { #=============================================================
-    my $var  = (caller_vars(0))[0];
-    my $name = var_name(1, $var);
-    my $key  = join(";", (caller(0))[1,2], # caller file and linenumber
-                         (caller(1))[0,3], # caller package and sub-name
-                         $name,            # caller variable name
-               );
-
-    die "variable has no name!" unless(defined $name);
-
-    if(exists $__state_cache{$key}) {
-        lexalias(1, $name, $__state_cache{$key});
-    }
-    else { 
-        $__state_cache{$key} = $var;
-    }
-
-    return;
-}
-
-sub import { #================================================================
-    my $parent = caller(1);
-    no strict 'refs';
-    *{"${parent}::my_state"} = \&my_state;
-    return;
-}
-
-#=============================================================================
-1;
 
 =head1 NAME
 
-Var::State - state [variable]; in perl 5.8 - sort-of...
+Var::State - state variable in perl 5.8
 
 =head1 VERSION
 
@@ -62,34 +20,83 @@ Var::State - state [variable]; in perl 5.8 - sort-of...
 
  print foo() for(0..10); # should print 0 to 10
 
+=cut
+
+use strict;
+use warnings;
+use Devel::Caller   qw/caller_vars/;
+use Devel::LexAlias qw/lexalias/;
+use PadWalker       qw/var_name/;
+
+our $VERSION = 0.04;
+my %state_cache;
+
 =head1 FUNCTIONS
 
 =head2 my_state(var)
 
-Will make "var" (@var, $var, %var) static.
+Will make C<var> (@var, $var, %var) static.
 
-=head2 state(var)
+=cut
 
-IMPORTANT: READ BUGS AND LIMITATIONS!
+sub my_state {
+    my $var  = (caller_vars(0))[0];
+    my $name = var_name(1, $var);
+    my $key;
 
-Not yet implemented.
+    die "my_state(): variable has no name!" unless(defined $name);
+
+    $key = join(";", (caller(0))[1,2], # caller file and linenumber
+                     (caller(1))[0,3], # caller package and sub-name
+                     $name,            # caller variable name
+           );
+
+    if(exists $state_cache{$key}) {
+        lexalias(1, $name, $state_cache{$key});
+    }
+    else { 
+        $state_cache{$key} = $var;
+    }
+
+    return;
+}
+
+=head2 state
+
+See L<LIMITATIONS>.
+
+=cut
+
+sub state {
+    die "state() is not implemented!\n";
+}
 
 =head2 import
 
 Will import C<my_state()> into the current namespace.
 
-=head1 BUGS AND LIMITATIONS
+=cut
 
-Need to add state as a keyword, so you don't have to declare the variable
-with my() first!
-This exact problem breakes compatibility with 5.10's state, and therefore
-t/11-state-5.10.t is not included in the test-suite - yet.
+sub import {
+    my $parent = caller(1);
+    no strict 'refs';
+    *{"${parent}::my_state"} = \&my_state;
+    return;
+}
+
+=head1 LIMITATIONS
+
+Need to add C<state> as a keyword, so you don't have to declare the variable
+with C<my()> first. This exact problem breakes compatibility with 5.10's
+state, and therefore C<t/11-state-5.10.t> is not included in the test-suite.
+
+=head1 BUGS
 
 Please report any bugs or feature requests to
 C<bug-var-state at rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Var-State>.
-I will be notified, and then you'll automatically be notified of progress on
-your bug as I make changes.
+I will be notified, and then you'll automatically be notified of
+progress on your bug as I make changes.
 
 =head1 AUTHOR
 
@@ -102,18 +109,6 @@ under the same terms as Perl itself.
 
 Copyright (c) 2007 Jan Henning Thorsen
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
 =cut
+
+1;
