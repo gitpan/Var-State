@@ -2,49 +2,52 @@ package Var::State;
 
 =head1 NAME
 
-Var::State - state variable in perl 5.8
+Var::State - Static variable in perl 5.8
 
 =head1 VERSION
 
-0.04
+0.05
 
 =head1 SYNOPSIS
 
  use Var::State;
 
  sub foo {
-     my $i = 0;
-     my_state $i;
+     static my $i = 0;
      return $i++;
  }
 
- print foo() for(0..10); # should print 0 to 10
+ print foo() for(0..10); # will print 0 to 10
 
 =cut
 
 use strict;
 use warnings;
-use Devel::Caller   qw/caller_vars/;
+use Devel::Caller qw/caller_vars/;
 use Devel::LexAlias qw/lexalias/;
-use PadWalker       qw/var_name/;
+use PadWalker qw/var_name/;
 
-our $VERSION = 0.04;
+our $VERSION = '0.05';
 my %state_cache;
 
 =head1 FUNCTIONS
 
-=head2 my_state(var)
+=head2 static(var)
 
-Will make C<var> (@var, $var, %var) static.
+Does almost the same as C<state> in 5.10, but it requires the
+variable to be declared with "my". See L</SYNOPSIS> for example.
+
+This function does support list context, something C<state> in
+5.10 does not support.
 
 =cut
 
-sub my_state {
+sub static {
     my $var  = (caller_vars(0))[0];
     my $name = var_name(1, $var);
     my $key;
 
-    die "my_state(): variable has no name!" unless(defined $name);
+    die "static(): variable has no name!" unless(defined $name);
 
     $key = join(";", (caller(0))[1,2], # caller file and linenumber
                      (caller(1))[0,3], # caller package and sub-name
@@ -52,7 +55,7 @@ sub my_state {
            );
 
     if(exists $state_cache{$key}) {
-        lexalias(1, $name, $state_cache{$key});
+        lexalias 1, $name, $state_cache{$key};
     }
     else { 
         $state_cache{$key} = $var;
@@ -73,14 +76,15 @@ sub state {
 
 =head2 import
 
-Will import C<my_state()> into the current namespace.
+Will import C<static()> into the current namespace.
 
 =cut
 
 sub import {
     my $parent = caller(1);
     no strict 'refs';
-    *{"${parent}::my_state"} = \&my_state;
+    *{"${parent}::my_state"} = \&static;
+    *{"${parent}::static"} = \&static;
     return;
 }
 

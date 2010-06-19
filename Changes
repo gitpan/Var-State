@@ -1,15 +1,21 @@
 Revision history for Var-State
 
-0.03    Sun, 18 Aug 2008 22:50:00 +0200
-        Completely removed PerlFiveEight::
+0.05     Sat Jun 19 18:31:42 CEST 2010
+       * Add static() as alias to my_state()
 
-0.02    Sun, 17 Aug 2008 21:53:00 +0200
-        Added tests for hash and array as well 
-        Added line-number and file-name to $key 
-        Added BUGS AND LIMITATIONS 
-        Fixed bug with only-one-arg-test (will not work with array and hash) 
-        Renamed from PerlFiveEight:: to Var::
+0.04     Mon Mar 16 00:00:00 CEST 2009
+       * ???
 
-0.01    Thu, 14 Aug 2008 16:07:00 +0200
-        First release of Var::State
+0.03     Sun, 18 Aug 2008 22:50:00 +0200
+       * Completely removed PerlFiveEight::
+
+0.02     Sun, 17 Aug 2008 21:53:00 +0200
+       * Add tests for hash and array as well 
+       * Add line-number and file-name to $key 
+       * Add BUGS AND LIMITATIONS 
+       * Fix bug with only-one-arg-test (will not work with array and hash) 
+       * Rename from PerlFiveEight:: to Var::
+
+0.01     Thu, 14 Aug 2008 16:07:00 +0200
+       * First release of Var::State
 

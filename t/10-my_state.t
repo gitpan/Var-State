@@ -1,33 +1,29 @@
-#!perl
-
 use strict;
 use warnings;
+use lib q(lib);
 use Var::State;
 use Test::More;
 
 plan tests => 9;
 
 for my $type (qw/scalar array hash/) {
-    for my $i (0..2) {
-        is(eval "state_$type()", $i, "state_$type()=$i");
+    for my $i (1..3) {
+        is(eval "static_$type()", $i, "static $type = $i");
     }
 }
 
-sub state_scalar {
-    my $x = 0;
-    my_state $x;
+sub static_scalar {
+    static my $x = 1;
     return $x++;
 }
 
-sub state_array {
-    my @array = (0);
-    my_state @array;
-    return $array[0]++;
+sub static_array {
+    static my @array;
+    return push @array, 1;
 }
 
-sub state_hash {
-    my %hash = (x => 0);
-    my_state %hash;
+sub static_hash {
+    static my %hash = (x => 1);
     return $hash{x}++;
 }
 

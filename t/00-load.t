@@ -1,9 +1,5 @@
-#!perl -T
-
-use Test::More tests => 1;
-
-BEGIN {
-	use_ok( 'Var::State' );
-}
-
-diag( "Testing Var::State $Var::State::VERSION, Perl $], $^X" );
+#!/usr/bin/env perl
+use lib qw(lib);
+use Test::More;
+plan tests => 1;
+use_ok('Var::State');

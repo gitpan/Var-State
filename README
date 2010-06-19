@@ -1,38 +1,40 @@
 NAME
-    Var::State - state [variable]; in perl 5.8 - sort-of...
+    Var::State - Static variable in perl 5.8
 
 VERSION
-    0.04
+    0.05
 
 SYNOPSIS
      use Var::State;
 
      sub foo {
-         my $i = 0;
-         my_state $i;
+         static my $i = 0;
          return $i++;
      }
 
-     print foo() for(0..10); # should print 0 to 10
+     print foo() for(0..10); # will print 0 to 10
 
 FUNCTIONS
-  my_state(var)
-    Will make "var" (@var, $var, %var) static.
+  static(var)
+    Does almost the same as "state" in 5.10, but it requires the variable to
+    be declared with "my". See "SYNOPSIS" for example.
 
-  state(var)
-    IMPORTANT: READ BUGS AND LIMITATIONS!
+    This function does support list context, something "state" in 5.10 does
+    not support.
 
-    Not yet implemented.
+  state
+    See LIMITATIONS.
 
   import
-    Will import "my_state()" into the current namespace.
+    Will import "static()" into the current namespace.
 
-BUGS AND LIMITATIONS
-    Need to add state as a keyword, so you don't have to declare the
-    variable with my() first! This exact problem breakes compatibility with
-    5.10's state, and therefore t/11-state-5.10.t is not included in the
-    test-suite - yet.
+LIMITATIONS
+    Need to add "state" as a keyword, so you don't have to declare the
+    variable with "my()" first. This exact problem breakes compatibility
+    with 5.10's state, and therefore "t/11-state-5.10.t" is not included in
+    the test-suite.
 
+BUGS
     Please report any bugs or feature requests to "bug-var-state at
     rt.cpan.org", or through the web interface at
     <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Var-State>. I will be
@@ -47,18 +49,4 @@ COPYRIGHT & LICENSE
     under the same terms as Perl itself.
 
     Copyright (c) 2007 Jan Henning Thorsen
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
-
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    675 Mass Ave, Cambridge, MA 02139, USA.
 
